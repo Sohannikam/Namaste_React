@@ -1,0 +1,32 @@
+{
+  "name": "namaste-react",
+  "version": "1.0.0",
+  "description": "this is namaste react",
+  "keywords": [
+    "react",
+    "namaste",
+    "react",
+    "sohan"
+  ],
+  "homepage": "https://github.com/Sohannikam/Namaste_React#readme",
+  "bugs": {
+    "url": "https://github.com/Sohannikam/Namaste_React/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sohannikam/Namaste_React.git"
+  },
+  "license": "ISC",
+  "author": "sohan nikam",
+  "type": "commonjs",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "dependencies": {
+    "parcel": "^2.16.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  }
+}
