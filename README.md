@@ -39,4 +39,17 @@
 react uses reconciliation algorithm also known as ReactFiber react is fast because it do DOM manupulation using virtual DOM.so basically react find outs the diifernce between virtual doms and updates the UI
 
 # useEffect
-useEffect gets called after our component get rendered 
+useEffect gets called after our component get rendered
+
+# Routing in web apps
+
+- Client Side Routing (used in react dont reload the entire page only reload that componetn)
+
+- Server Side Routing(old way fetch the html page and reload the entire page)
+
+
+# class based component is a component which extends React.component and it has a render method that returns some piece of JSX 
+
+# functional component is a javascript function which returns some piece of jsx
+
+# never update state varaibles directly 

@@ -1,32 +1,44 @@
 import RestaurantCard from "./RestaurantCard";
-import resList from "../utils/mockData";
 import { useState,useEffect } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
+import { RESTAURANT_LIST_API } from "../utils/constants";
+
 
 const Body = () => {
 
     //Local State Variable - super powerful varaible 
 const [listOfRestaurant,setListOfRestaurant]=useState([]);
+const[updatedlist,setUpdatedList]=useState([])
 
 const [searchText,setSearchText]=useState("")
 
 // whenever state variable update react rerenders the component 
 
 useEffect(()=>{
+        console.log("useEffect called after search button executed")
+
 fetchData();    
 },[]);
 
 const fetchData =async ()=>{
-    const data= await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5288974&lng=73.8665321&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    )
+    try {
+         const data= await fetch(RESTAURANT_LIST_API)
 
     const json = await data.json();
     console.log(json)
 
-    setListOfRestaurant(json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants
+    setListOfRestaurant(json.data.data.cards[1].card.card.gridElements.infoWithStyle.restaurants
 )
+     setUpdatedList(json.data.data.cards[1].card.card.gridElements.infoWithStyle.restaurants
+)
+        
+    } catch (error) {
+console.log("Error:", error);
+} finally {
 }
+   
+};
 
 // Conditional Rendering 
 
@@ -38,15 +50,17 @@ const fetchData =async ()=>{
                         setSearchText(e.target.value)
                     }}/>
                     <button onClick={()=>{
+                    
                     const filterresto=listOfRestaurant.filter((res)=>
-                        res.info.name.includes(searchText)
+                        res.info.name.toLowerCase().includes(searchText.toLowerCase())
                     )
-                    setListOfRestaurant(filterresto)
+                    setUpdatedList(filterresto)
                     }}>Search</button>
                 </div>
                 <button className="filter-btn" onClick={() => {
-                    const filterlist =listOfRestaurant.filter(res=>res.avgRating>4);
-                   setListOfRestaurant(filterlist)
+                    const filterlist =listOfRestaurant.filter(res=>res.info.avgRating>4.3);
+                   setUpdatedList(filterlist)
+                   
                  }}
                     >
                     Top Rated Restaurant
@@ -54,7 +68,7 @@ const fetchData =async ()=>{
             </div>
             <div className="res-container">
                 {/* react itself says dont use index as keys use unqiue id */}
-                {listOfRestaurant.map((restraurant) => <RestaurantCard key={restraurant.info.id} resName={restraurant.info} />)}
+                {updatedlist.map((restraurant) => <Link to={"/restaurants/"+restraurant.info.id} key={restraurant.info.id}><RestaurantCard  resName={restraurant.info} /></Link> )}
             </div>
         </div>
     )
